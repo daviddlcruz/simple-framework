@@ -1,0 +1,7 @@
+{
+    "name": "daviddlcruz/simple-framework",
+    "description": "Implementation of a simple framework using the symfony 'Create your own PHP Framework' tutorial",
+    "type": "project",
+    "minimum-stability": "stable",
+    "require": {}
+}
