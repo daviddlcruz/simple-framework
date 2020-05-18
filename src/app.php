@@ -1,22 +1,42 @@
 <?php
+
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing;
 
 $routes = new Routing\RouteCollection();
-//$routes->add('hello', new Routing\Route('/hello/{name}', ['name' => 'World']));
-//$routes->add('bye', new Routing\Route('/bye'));
 
-$routes->add('hello', new Routing\Route('/hello/{name}', [
-    'name' => 'World',
+//$routes->add('hello', new Routing\Route('/hello/{name}', [
+//    'name' => 'World',
+//    '_controller' => function ($request) {
+//        // $foo will be available in the template
+//        $request->attributes->set('foo', 'bar');
+//
+//        $response = render_template($request);
+//
+//        // change some header
+//        $response->headers->set('Content-Type', 'text/plain');
+//
+//        return $response;
+//    }
+//]));
+
+function is_leap_year($year = null) {
+    if (null === $year) {
+        $year = date('Y');
+    }
+
+    return 0 === $year % 400 || (0 === $year % 4 && 0 !== $year % 100);
+}
+
+$routes = new Routing\RouteCollection();
+$routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', [
+    'year' => null,
     '_controller' => function ($request) {
-        // $foo will be available in the template
-        $request->attributes->set('foo', 'bar');
+        if (is_leap_year($request->attributes->get('year'))) {
+            return new Response('Yep, this is a leap year!');
+        }
 
-        $response = render_template($request);
-
-        // change some header
-        $response->headers->set('Content-Type', 'text/plain');
-
-        return $response;
+        return new Response('Nope, this is not a leap year.');
     }
 ]));
 
