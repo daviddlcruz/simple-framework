@@ -1,24 +1,10 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing;
 
 $routes = new Routing\RouteCollection();
-
-//$routes->add('hello', new Routing\Route('/hello/{name}', [
-//    'name' => 'World',
-//    '_controller' => function ($request) {
-//        // $foo will be available in the template
-//        $request->attributes->set('foo', 'bar');
-//
-//        $response = render_template($request);
-//
-//        // change some header
-//        $response->headers->set('Content-Type', 'text/plain');
-//
-//        return $response;
-//    }
-//]));
 
 function is_leap_year($year = null) {
     if (null === $year) {
@@ -30,7 +16,7 @@ function is_leap_year($year = null) {
 
 class LeapYearController
 {
-    public function index($request)
+    public function index(Request $request)
     {
         if (is_leap_year($request->attributes->get('year'))) {
             return new Response('Yep, this is a leap year!');
@@ -43,7 +29,7 @@ class LeapYearController
 $routes = new Routing\RouteCollection();
 $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', [
     'year' => null,
-    '_controller' => [new LeapYearController(), 'index'],
+    '_controller' => 'LeapYearController::index',
 ]));
 
 return $routes;
